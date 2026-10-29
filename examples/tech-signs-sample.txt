@@ -1,0 +1,6 @@
+Эта строка придумана для проверки скрипта.
+Компания основана в 2015 году. :contentReference[oaicite:0]{index=0}
+Подробнее: https://example.org/about?utm_source=chatgpt.com
+|access-date=2025-xx-xx
+Обычная строка без маркеров.
+История правок: https://example.org/w/index.php?title=%D0%90%D0%B1https://example.org/w/index.php?title=Ab&action=historyaction=history
