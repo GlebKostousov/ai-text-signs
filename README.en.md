@@ -1,19 +1,20 @@
-# AI writing patterns (ai-text-signs)
+# AI writing pattern detection (ai-text-signs)
 
 [Русская версия](README.md)
 
-An agent skill (Claude Code, Cursor, Codex and other tools that read `SKILL.md`) and a plain editing checklist for analyzing patterns typical of AI-generated writing. It shows which patterns a text uses, where and how densely, explains why they read badly, and helps rewrite the text in plain language. The skill itself is written in Russian and is tuned for Russian text; the English Wikipedia material is translated and summarized.
+An agent skill (Claude Code, Cursor, Codex and other tools that read `SKILL.md`) and a plain editing checklist. It detects patterns typical of AI-generated writing in a text and rates how strongly the text matches them: high, noticeable, low or none. Each match comes with a quote and its location. It then helps rewrite those places in plain language. The skill itself is written in Russian and is tuned for Russian text; the English Wikipedia material is translated and summarized.
 
-It is not an AI detector and does not tell you who wrote a text. People use the same patterns, and an AI draft that has been edited (for example with this skill) may show very few of them.
+It does not say whether a human or an AI wrote the text. It states how well the text matches known patterns. People use the same moves, and an edited AI text may show very few of them.
 
 It is based on two Wikipedia pages: Russian [«Википедия:Признаки сгенерированности текста»](https://ru.wikipedia.org/wiki/Википедия:Признаки_сгенерированности_текста) and English [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). The patterns are grouped into 19 categories, followed by a list of things that are *not* patterns, 16 rewriting rules and a section on technical traces.
 
 ## Modes
 
-- Audit (Аудит, pattern analysis) quotes each pattern, says where it occurs and rates density on a four-step scale: none, isolated, noticeable, dense. Technical traces such as `oaicite` are reported on a separate line.
+- Detection (Детекция, check for AI patterns) answers questions like "is this AI?" with a result block: the match level on a four-step scale (high, noticeable, low, none), the strongest matches with quotes and locations, chatbot technical traces such as `oaicite` on a separate line (the strongest signal the skill has), and one closing line saying the result is a match with known AI patterns and gives no verdict on whether AI wrote the text. The level depends on how many pattern groups match and how densely: "high" means five or more groups and two or more hits in almost every paragraph, "low" means one or two weak hits in the whole text.
+- Audit (Аудит, full review) uses the same block and scale but lists every match in order and ends with what to fix first.
 - Cleanup (Чистка) rewrites the text, keeps the author's facts, names, numbers and links, never invents new ones (missing facts are marked `[нужен факт]`), and lists the edits.
 
-[examples/](examples/) has one audit and two cleanups, all on invented texts.
+[examples/](examples/) has a detection and audit example and two cleanups, all on invented texts.
 
 ## Install
 
@@ -44,7 +45,7 @@ It looks for `contentReference[oaicite:…]`, `utm_source=chatgpt.com`, `utm_sou
 
 ## Limitations
 
-The skill catches techniques, not origin. Pattern density says nothing reliable about authorship: an AI text cleaned with this skill will show few patterns, and a person writing to a press-release template will show many. Only technical traces such as `oaicite` or chatbot UTM tags are strong evidence that a chatbot touched the text, and even they do not show that it wrote all of it. After a cleanup some residue may stay, such as an even rhythm or lots of "label: explanation" colons.
+Detection catches techniques; it cannot see where a text came from. Even a high match with AI patterns says nothing reliable about authorship: an AI text cleaned with this skill will show few patterns, and a person writing to a press-release template will show many. Only technical traces such as `oaicite` or chatbot UTM tags are strong evidence that a chatbot touched the text, and even they do not show that it wrote all of it. After a cleanup some residue may stay, such as an even rhythm or lots of "label: explanation" colons.
 
 A single pattern means little; clusters from different groups carry weight. AI detectors are unreliable and their scores are not proof. Models and human writing habits change, and the catalog only reflects the Wikipedia pages as of 2026-10-29.
 
